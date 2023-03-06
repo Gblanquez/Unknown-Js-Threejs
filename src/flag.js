@@ -39,6 +39,7 @@ const flag = new THREE.Mesh(geometry, material);
 
 flag.scale.y = 2 / 3
 flag.position.y = 0.2
+flag.position.x = - 0.1
 
 
 scene.add(flag);

@@ -74,6 +74,8 @@ for (let i = 0; i < 150; i++) {
 
 // Particles
 
+const ParticlesGroup = new THREE.Group()
+
 const particleGeometry = new THREE.SphereGeometry(1, 200, 200)
 const particleMaterial = new THREE.PointsMaterial({
     size: 0.001,
@@ -82,7 +84,9 @@ const particleMaterial = new THREE.PointsMaterial({
 
 const particleMesh = new THREE.Points(particleGeometry, particleMaterial)
 
-scene.add(particleMesh)
+ParticlesGroup.add(particleMesh)
+scene.add(ParticlesGroup)
+
 
 
 

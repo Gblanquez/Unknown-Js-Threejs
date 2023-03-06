@@ -11,6 +11,7 @@ void main()
 
   float elevation = sin(modelPosition.x * uFrequency.x - uTime) * 0.1;
   elevation += sin(modelPosition.y * uFrequency.y - uTime) * 0.1;
+//   elevation += sin(modelPosition.z * uFrequency.z - uTime) * 0.1;
 
 
   modelPosition.z += elevation;
