@@ -14,9 +14,12 @@
     "jquery": "^3.6.0",
     "rimraf": "^3.0.2",
     "vite": "^2.7.2",
-    "vite-plugin-glsl": "^0.1.1"
+    "vite-plugin-glsl": "^0.1.5"
   },
   "dependencies": {
-    "gsap": "^3.9.1"
+    "@barba/core": "^2.9.7",
+    "gsap": "^3.11.4",
+    "split-type": "^0.3.3",
+    "three": "^0.150.1"
   }
 }
