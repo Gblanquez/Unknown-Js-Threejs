@@ -250,7 +250,7 @@ const tick = () =>
 
 
 
-barba.init();
+// barba.init();
 
 
 
