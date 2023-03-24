@@ -23,7 +23,7 @@ const flagTexture2 = textureLoader.load('https://uploads-ssl.webflow.com/63bede6
 
 //geometry
 
-const geometry = new THREE.PlaneGeometry(1, 1, 30, 30)
+const geometry = new THREE.PlaneGeometry(0.8, 0.8, 50, 50)
 const material = new THREE.ShaderMaterial({
     vertexShader: flagVertex,
     fragmentShader: flagFragment,
@@ -37,9 +37,9 @@ const material = new THREE.ShaderMaterial({
 });
 const flag = new THREE.Mesh(geometry, material);
 
-flag.scale.y = 2 / 3
-flag.position.y = 0.2
-flag.position.x = - 0.1
+// flag.scale.y = 2 / 3
+// flag.position.y = 0.2
+// flag.position.x = - 0.1
 
 
 scene.add(flag);

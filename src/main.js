@@ -5,7 +5,6 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import './flag.js'
-import barba from '@barba/core';
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -29,7 +28,7 @@ scene.fog = new THREE.Fog( fogColor, 0.01, 20)
 
 //Light 1
 const lightOne = new THREE.HemisphereLight('0xd6e6ff', '0xa38c08', 1);
-scene.add(lightOne);
+// scene.add(lightOne);
 
 
 //Smoke Texture
@@ -42,13 +41,13 @@ const smokeGeometry = new THREE.PlaneGeometry(300, 300);
 const smokeMaterial = new THREE.MeshLambertMaterial({
     map: smokeTexture,
     emissive: '0x222222',
-    opacity: 0.15,
+    opacity: 0.06,
     transparent: true
 })
 
 let smokeParticles = [];
 
-for (let i = 0; i < 150; i++) {
+for (let i = 0; i < 400; i++) {
     let smokeElement = new THREE.Mesh(smokeGeometry, smokeMaterial);
     smokeElement.scale.set(1, 1, 1);
 
@@ -84,6 +83,8 @@ const particleMaterial = new THREE.PointsMaterial({
 
 const particleMesh = new THREE.Points(particleGeometry, particleMaterial)
 
+
+
 ParticlesGroup.add(particleMesh)
 scene.add(ParticlesGroup)
 
@@ -102,7 +103,7 @@ const sizes = {
 
 //Global Particles
 const objectDistance = 4
-const particlesCount = 2000
+const particlesCount = 3600
 const positions = new Float32Array(particlesCount * 3)
 
 for (let i = 0; i < particlesCount; i++) 
@@ -209,6 +210,7 @@ const tick = () =>
     const parallexX = cursor.x * 0.5
     const parallexY = - cursor.y * 0.5
 
+    ParticlesGroup.rotateZ = 1
 
     cameraGroup.position.x += (parallexX - cameraGroup.position.x) * 3 * deltaTime
     cameraGroup.position.y += (parallexY - cameraGroup.position.y) * 3 * deltaTime
@@ -234,23 +236,9 @@ const tick = () =>
 }
 
 
-//Barba Js
-
-// function resetWebflow(data) {
-//     let parser = new DOMParser();
-//     let dom = parser.parseFromString(data.next.html, "text/html");
-//     let webflowPageId = $(dom).find("html").attr("data-wf-page");
-//     $("html").attr("data-wf-page", webflowPageId);
-//     window.Webflow && window.Webflow.destroy();
-//     window.Webflow && window.Webflow.ready();
-//     window.Webflow && window.Webflow.require("ix2").init();
-//   }
 
 
 
-
-
-// barba.init();
 
 
 
