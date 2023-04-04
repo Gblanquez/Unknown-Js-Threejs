@@ -243,6 +243,11 @@
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz"
   "version" "2.5.0"
 
+"typescript@^5.0.2":
+  "integrity" "sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw=="
+  "resolved" "https://registry.npmjs.org/typescript/-/typescript-5.0.2.tgz"
+  "version" "5.0.2"
+
 "vite-plugin-glsl@^0.1.5":
   "integrity" "sha512-BsY0ndZthCXYipF/rc/Vri0s6N/JNwMyCDRJx7qiJNNY8+MiDgzhT2iOIHL7O7v3CvjOG9yOM2+WVTNvnHGT1w=="
   "resolved" "https://registry.npmjs.org/vite-plugin-glsl/-/vite-plugin-glsl-0.1.5.tgz"

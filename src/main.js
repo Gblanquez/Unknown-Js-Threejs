@@ -5,6 +5,8 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import './flag.js'
+import './anime.js'
+import { TextureLoader } from 'three';
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -20,7 +22,7 @@ const fogColor = new THREE.Color('white')
 // Scene
 const scene = new THREE.Scene()
 scene.background = new THREE.Color('#090909');
-scene.fog = new THREE.Fog( fogColor, 0.01, 20)
+scene.fog = new THREE.Fog( fogColor, 0.0, 300)
 
 
 
@@ -33,31 +35,33 @@ const lightOne = new THREE.HemisphereLight('0xd6e6ff', '0xa38c08', 1);
 
 //Smoke Texture
 
-const smokeTexture = new THREE.TextureLoader().load('https://uploads-ssl.webflow.com/63bede65c490b3fd222e07c7/64053d0700b83da58c37a711_Smoke15Frames%20(1).png')
-smokeTexture.encoding = THREE.sRGBEncoding;
-const smokeGeometry = new THREE.PlaneGeometry(300, 300);
+// const smokeTexture = new THREE.TextureLoader().load('https://uploads-ssl.webflow.com/63bede65c490b3fd222e07c7/64053d0700b83da58c37a711_Smoke15Frames%20(1).png')
+// smokeTexture.encoding = THREE.sRGBEncoding;
+// const smokeGeometry = new THREE.PlaneGeometry(300, 300);
 
 
-const smokeMaterial = new THREE.MeshLambertMaterial({
-    map: smokeTexture,
-    emissive: '0x222222',
-    opacity: 0.06,
-    transparent: true
-})
+// const smokeMaterial = new THREE.MeshLambertMaterial({
+//     map: smokeTexture,
+//     emissive: '0x222222',
+//     opacity: 0.06,
+//     transparent: true
+// })
 
-let smokeParticles = [];
+// let smokeParticles = [];
 
-for (let i = 0; i < 400; i++) {
-    let smokeElement = new THREE.Mesh(smokeGeometry, smokeMaterial);
-    smokeElement.scale.set(1, 1, 1);
+// for (let i = 0; i < 400; i++) {
+//     let smokeElement = new THREE.Mesh(smokeGeometry, smokeMaterial);
+//     smokeElement.scale.set(1, 1, 1);
 
-    smokeElement.position.set(Math.random() * 1000 - 100, Math.random() * 1000 - 100, Math.random() * 1000 - 100);
-    smokeElement.rotation.z = Math.random() * 360;
+//     smokeElement.position.set(Math.random() * 1000 - 100, Math.random() * 1000 - 100, Math.random() * 1000 - 100);
+//     smokeElement.rotation.z = Math.random() * 360;
 
-    scene.add(smokeElement);
-    smokeParticles.push(smokeElement);
+//     scene.add(smokeElement);
+//     smokeParticles.push(smokeElement);
 
-}
+// }
+
+
 
 
 
@@ -69,6 +73,8 @@ for (let i = 0; i < 400; i++) {
 
 
 // scene.add(cube);
+
+//Barba
 
 
 // Particles
@@ -103,7 +109,7 @@ const sizes = {
 
 //Global Particles
 const objectDistance = 4
-const particlesCount = 3600
+const particlesCount = 4500
 const positions = new Float32Array(particlesCount * 3)
 
 for (let i = 0; i < particlesCount; i++) 
@@ -117,16 +123,72 @@ const particlesGeometry = new THREE.BufferGeometry()
 
 particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
 
+const textureLoader = new THREE.TextureLoader()
 
-const particlesmaterial = new THREE.PointsMaterial({
+const particleTexture = textureLoader.load('https://uploads-ssl.webflow.com/63bede65c490b3fd222e07c7/642595a6660d050328795813_circle_05.png')
+
+
+const particlesMaterial = new THREE.PointsMaterial({
     color: new THREE.Color('white'),
     sizeAttenuation: true,
-    size: 0.001
+    transparent: true,
+    size: 0.02
 })
 
-const globalParticles = new THREE.Points(particlesGeometry, particlesmaterial)
+
+particlesMaterial.encoding = THREE.sRGBEncoding;
+particlesMaterial.alphaMap = particleTexture
+particlesMaterial.alphaTest = 0.12
+particleMaterial.depthTest = false
+
+const globalParticles = new THREE.Points(particlesGeometry, particlesMaterial)
 
 scene.add(globalParticles)
+
+
+///
+
+//Smoke Partciles
+const smokeParticlesCount = 300
+const smokePositions = new Float32Array(smokeParticlesCount * 3)
+
+for (let i = 0; i < smokeParticlesCount; i++) 
+{
+    smokePositions [ i * 3 + 0] = (Math.random() - 0.5 ) * 10
+    smokePositions [ i * 3 + 1] = ( Math.random() - 0.5) * 10
+    smokePositions [ i * 3 + 2] = (Math.random() - 0.5) * 10
+}
+
+const smokeGeometryTwo = new THREE.BufferGeometry()
+
+smokeGeometryTwo.setAttribute('position', new THREE.BufferAttribute(smokePositions, 3))
+
+
+
+const smokeTextureTwo = textureLoader.load('https://uploads-ssl.webflow.com/63bede65c490b3fd222e07c7/642595a7547f3ac4cedee972_smoke_04.png')
+
+
+const smokesMaterial = new THREE.PointsMaterial({
+    color: new THREE.Color('white'),
+    sizeAttenuation: true,
+    transparent: true,
+    size: 10
+})
+
+smokesMaterial.opacity = 0.5
+smokesMaterial.encoding = THREE.sRGBEncoding;
+smokesMaterial.alphaMap = smokeTextureTwo
+smokesMaterial.alphaTest = 0.12
+smokesMaterial.depthTest = false
+
+const smokeParticlesTwo = new THREE.Points(smokeGeometryTwo, smokesMaterial)
+
+
+
+scene.add(smokeParticlesTwo)
+
+
+
 
 
 
@@ -210,15 +272,18 @@ const tick = () =>
     const parallexX = cursor.x * 0.5
     const parallexY = - cursor.y * 0.5
 
-    ParticlesGroup.rotateZ = 1
+    //Animate Particles
+    globalParticles.rotation.y = elapsedTime * 0.04;
+
+    //
 
     cameraGroup.position.x += (parallexX - cameraGroup.position.x) * 3 * deltaTime
     cameraGroup.position.y += (parallexY - cameraGroup.position.y) * 3 * deltaTime
 
     //Animate SMoke
-    for (let i = 0; i < smokeParticles.length; i++){
-        smokeParticles[i].rotation.z += (deltaTime * 0.09);
-    }
+    // for (let i = 0; i < smokeParticles.length; i++){
+    //     smokeParticles[i].rotation.z += (deltaTime * 0.09);
+    // }
 
 
 
