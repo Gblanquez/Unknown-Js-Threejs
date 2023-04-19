@@ -185,7 +185,7 @@ const smokeParticlesTwo = new THREE.Points(smokeGeometryTwo, smokesMaterial)
 
 
 
-scene.add(smokeParticlesTwo)
+// scene.add(smokeParticlesTwo)
 
 
 
