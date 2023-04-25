@@ -15,7 +15,7 @@ scene.background = new THREE.Color('#090909');
 const textureLoader = new THREE.TextureLoader();
 
 const flagTexture = textureLoader.load('https://uploads-ssl.webflow.com/63bede65c490b3fd222e07c7/63ff9df3b911b7c0e8a75152_flag1.jpg');
-const flagTexture2 = textureLoader.load('https://uploads-ssl.webflow.com/63bede65c490b3fd222e07c7/63c56485a9b6a0490089e8a6_unknown-group.jpg');
+const flagTexture2 = textureLoader.load('https://uploads-ssl.webflow.com/63bede65c490b3fd222e07c7/6441c32e9b635636e54195fb_White%20PNG%20High%20Res.png');
 
 
 

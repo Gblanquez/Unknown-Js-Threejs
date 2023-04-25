@@ -14,12 +14,12 @@ void main()
 //   elevation += sin(modelPosition.z * uFrequency.z - uTime) * 0.1;
 
 
-  modelPosition.z += elevation;
+  // modelPosition.z += elevation;
 
-  vec4 viewPosition = viewMatrix * modelPosition;
-  vec4 porjectedPosition = projectionMatrix * viewPosition;
+  // vec4 viewPosition = viewMatrix * modelPosition;
+  // vec4 porjectedPosition = projectionMatrix * viewPosition;
 
-  gl_Position = porjectedPosition;
+  gl_Position = vec4(position, 1.0);
 
   vUv = uv;
   vElevation = elevation;  

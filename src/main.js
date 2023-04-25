@@ -4,9 +4,13 @@ import * as THREE from 'three'
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import './flag.js'
 import './anime.js'
 import { TextureLoader } from 'three';
+import flagVertex from './shaders/flagvertex.glsl'
+import flagFragment from './shaders/flagfragment.glsl'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -19,18 +23,28 @@ const canvas = document.querySelector('canvas.webgl')
 //Fog
 const fogColor = new THREE.Color('white')
 
+//Bloom Params
+
+const params = {
+    exposure: 1,
+    bloomStrength: 1.5,
+    bloomThreshold: 0,
+    bloomRadius: 0
+};
+
 // Scene
 const scene = new THREE.Scene()
 scene.background = new THREE.Color('#090909');
 scene.fog = new THREE.Fog( fogColor, 0.0, 300)
 
 
+let composer;
+const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
 
+bloomPass.threshold = params.bloomThreshold;
+bloomPass.strength = params.bloomStrength;
+bloomPass.radius = params.bloomRadius;
 
-
-//Light 1
-const lightOne = new THREE.HemisphereLight('0xd6e6ff', '0xa38c08', 1);
-// scene.add(lightOne);
 
 
 //Smoke Texture
@@ -188,6 +202,34 @@ const smokeParticlesTwo = new THREE.Points(smokeGeometryTwo, smokesMaterial)
 // scene.add(smokeParticlesTwo)
 
 
+//Unknown Title
+
+const flagTexture2 = textureLoader.load('https://uploads-ssl.webflow.com/63bede65c490b3fd222e07c7/6441c32e9b635636e54195fb_White%20PNG%20High%20Res.png');
+
+const flagGeometry = new THREE.PlaneGeometry(1.9, 0.8, 150, 150)
+const flagMaterial = new THREE.ShaderMaterial({
+    vertexShader: flagVertex,
+    fragmentShader: flagFragment,
+    transparent: true,
+    uniforms: 
+    {
+        uFrequency: { value: new THREE.Vector2(10, 5) },
+        uTime: { value: 0 },
+        uTexture: { value: flagTexture2 }
+    }
+});
+const flag = new THREE.Mesh(flagGeometry, flagMaterial);
+
+
+
+
+// scene.add(flag);
+
+
+//Unkown Title End
+
+
+
 
 
 
@@ -221,7 +263,7 @@ scene.add(cameraGroup)
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
+const camera = new THREE.PerspectiveCamera(86, sizes.width / sizes.height, 0.1, 1000)
 camera.position.set(1, 1, 3)
 cameraGroup.add(camera)
 
@@ -254,6 +296,17 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+
+//Update Bloom Pass
+
+const renderScene = new RenderPass( scene, camera );
+const pointLight = new THREE.PointLight( '#963131' , 1 );
+scene.add( pointLight );
+
+composer = new EffectComposer( renderer );
+composer.addPass( renderScene );
+composer.addPass( bloomPass );
 
 /**
  * Animate
