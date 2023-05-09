@@ -34,7 +34,7 @@ const params = {
 
 // Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color('#090909');
+scene.background = new THREE.Color('#151414');
 scene.fog = new THREE.Fog( fogColor, 0.0, 300)
 
 
@@ -226,6 +226,7 @@ const flag = new THREE.Mesh(flagGeometry, flagMaterial);
 // scene.add(flag);
 
 
+console.log('jeulu there')
 //Unkown Title End
 
 
